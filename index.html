@@ -4,7 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login or Register</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #login-register-container, #dashboard {
+            width: 300px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 95%;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #generated-links {
+            margin-top: 20px;
+        }
+
+        #generated-links a {
+            display: block;
+            margin: 5px 0;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        #generated-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <div id="login-register-container">
@@ -29,6 +86,53 @@
         <div id="generated-links"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Mock database for users
+        const users = {};
+
+        // Event listeners for login and registration
+        document.getElementById('login-form').addEventListener('submit', login);
+        document.getElementById('register-link').addEventListener('click', showRegisterForm);
+
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (users[username] && users[username] === password) {
+                alert('Login successful!');
+                document.getElementById('login-register-container').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                document.getElementById('user-display').innerText = username;
+            } else {
+                alert('Invalid username or password.');
+            }
+        }
+
+        function showRegisterForm(event) {
+            event.preventDefault();
+            const username = prompt('Enter a username:');
+            const password = prompt('Enter a password:');
+
+            if (username && password) {
+                users[username] = password;
+                alert('Registration successful! Please log in.');
+            } else {
+                alert('Registration failed. Try again.');
+            }
+        }
+
+        // Dashboard functionality
+        function createLink(platform) {
+            const uniqueLink = `${window.location.origin}/track?platform=${platform}&user=${document.getElementById('user-display').innerText}`;
+            const linkElement = document.createElement('a');
+            linkElement.href = uniqueLink;
+            linkElement.innerText = `Track ${platform} link`;
+            linkElement.target = '_blank';
+
+            document.getElementById('generated-links').appendChild(linkElement);
+            alert(`Link created for ${platform}: ${uniqueLink}`);
+        }
+    </script>
 </body>
 </html>
