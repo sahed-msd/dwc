@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tracking</title>
+</head>
+<body>
+    <h1>Tracking Information</h1>
+    <p id="info"></p>
+
+    <script>
+        // Simulate tracking
+        const queryParams = new URLSearchParams(window.location.search);
+        const platform = queryParams.get('platform');
+        const user = queryParams.get('user');
+
+        const trackingData = {
+            ip: '192.168.1.1', // Mock IP
+            device: navigator.userAgent,
+            timestamp: new Date().toISOString(),
+        };
+
+        document.getElementById('info').innerText = `
+            Platform: ${platform}
+            User: ${user}
+            IP: ${trackingData.ip}
+            Device: ${trackingData.device}
+            Timestamp: ${trackingData.timestamp}
+        `;
+    </script>
+</body>
+</html>
